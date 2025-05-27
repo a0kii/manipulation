@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Манипуляции - Психология общения</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #ee7752, #e73c7e);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f8ff, #fff8dc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .section:nth-child(odd) {
+            background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #090909;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            font-weight: 700;
+        }
+
+        .section-content {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+        }
+
+        /* Image Placeholder Styles */
+        .image-placeholder {
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            border: 3px dashed #a0aec0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .placeholder-text {
+            color: #718096;
+            font-weight: 600;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Card Styles */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            color: #4f46e5;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: #1f2937;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 3rem 0;
+            opacity: 0;
+            animation: fadeInTimeline 0.8s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .timeline-item:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 45%;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 5px white, 0 0 0 10px #667eea;
+        }
+
+        /* Interactive Quiz */
+        .quiz-container {
+            background: linear-gradient(135deg, #ee7752, #e73c7e, #23a6d5);
+            border-radius: 25px;
+            padding: 3.5rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .quiz-question {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            font-weight: 600;
+            z-index: 2;
+            position: relative;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            z-index: 2;
+            position: relative;
+        }
+
+        .quiz-option {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 1.2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Defense Section */
+        .defense-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .defense-item {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border-radius: 20px;
+            padding: 2rem;
+            border-left: 5px solid #10b981;
+            transition: all 0.3s ease;
+        }
+
+        .defense-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
+        }
+
+        .defense-item h4 {
+            color: #065f46;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInTimeline {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border: 2px solid #fca5a5;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .alert-box::before {
+            content: '';
+            font-size: 2rem;
+            position: absolute;
+            top: -25px;
+            left: 20px;
+            padding: 0 10px;
+        }
+
+        .alert-box h4 {
+            color: #dc2626;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(to right, #667eea, #6b73ff);
+            z-index: 1001;
+            transition: width 0.3s ease;
+        }
+
+        /* Counter Animation */
+        .stat-counter {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e73c7e;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">Манипуляции</div>
+            <ul class="nav-links">
+                <li><a href="#definition">Определение</a></li>
+                <li><a href="#types">Виды</a></li>
+                <li><a href="#techniques">Техники</a></li>
+                <li><a href="#recognition">Распознавание</a></li>
+                <li><a href="#defense">Защита</a></li>
+                <li><a href="#quiz">Тест</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="floating">МАНИПУЛЯЦИИ</h1>
+            <h2 style="font-size: 1.8rem; margin-bottom: 1rem; font-weight: 300;">в современном обществе</h2>
+            <p>Изучение психологических механизмов влияния и способов защиты от них</p>
+            <a href="#definition" class="cta-button">Изучить механизмы</a>
+        </div>
+    </section>
+
+    <section class="section" id="definition">
+        <div class="container">
+            <h2 class="section-title">Что такое манипуляция?</h2>
+            <div class="section-content">
+                <div class="image-placeholder">
+                    <img src="./images/kuklovod (1).jpg" alt="😒 Кажется, изображение не загрузилось">
+                </div>
+                
+                <div style="max-width: 900px; margin: 3rem auto; text-align: center;">
+                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                        <strong>Манипуляция</strong> — это скрытое психологическое воздействие на человека 
+                        с целью заставить его действовать вопреки собственным интересам, 
+                        но в интересах манипулятора.
+                    </p>
+                </div>
+
+                <div class="alert-box">
+                    <h4>Ключевые признаки манипуляции:</h4>
+                    <p>• Скрытность воздействия<br>• Игра на эмоциях<br>• Принуждение к определенным действиям<br>• Выгода только для манипулятора</p>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>🎯 Цель</h3>
+                        <p>Получить контроль над поведением, решениями или ресурсами другого человека без его осознанного согласия.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🎭 Маскировка</h3>
+                        <p>Истинные намерения скрываются под видом заботы, дружбы, любви или других позитивных мотивов.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🧠 Механизм</h3>
+                        <p>Использование психологических уязвимостей: страхов, комплексов, потребностей человека.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="types">
+        <div class="container">
+            <h2 class="section-title">Виды манипуляций</h2>
+            <div class="section-content">
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>💔 Эмоциональные</h3>
+                        <p><strong>Игра на чувствах:</strong> чувство вины, жалость, страх потери, ревность. Манипулятор заставляет жертву испытывать сильные эмоции для принятия нужного решения.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🧠 Когнитивные</h3>
+                        <p><strong>Искажение информации:</strong> ложные факты, селективная подача данных, логические ошибки, создание ложных дилемм.</p>
+                    </div>
+                    <div class="card">
+                        <h3>👥 Социальные</h3>
+                        <p><strong>Давление группы:</strong> использование авторитета, мнения большинства, социальных норм, статуса для влияния на решения.</p>
+                    </div>
+                    <div class="card">
+                        <h3>💰 Экономические</h3>
+                        <p><strong>Финансовое принуждение:</strong> создание зависимости, угроза лишения средств, ложные обещания выгоды.</p>
+                    </div>
+                    <div class="card">
+                        <h3>⚡ Временные</h3>
+                        <p><strong>Цейтнот:</strong> создание искусственной срочности, давление временными рамками, не давая времени на обдумывание.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🔒 Принуждение</h3>
+                        <p><strong>Угрозы и шантаж:</strong> прямые или завуалированные угрозы, компромат, физическое или психологическое давление.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="techniques">
+        <div class="container">
+            <h2 class="section-title">Техники манипуляций</h2>
+            <div class="section-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>🍯 "Медовая ловушка"</h3>
+                            <p><strong>Суть:</strong> Сначала человека осыпают комплиментами и подарками, создают ощущение особенности, а затем просят об "услуге".</p>
+                            <p><em>Пример:</em> "Ты такой умный, только ты можешь мне помочь с этим проектом..."</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>⚖️ "Взаимный обмен"</h3>
+                            <p><strong>Суть:</strong> Создается ощущение долга за оказанную услугу, которую жертва не просила.</p>
+                            <p><em>Пример:</em> Неожиданный подарок с последующей просьбой о большой услуге.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>😢 "Игра на жалости"</h3>
+                            <p><strong>Суть:</strong> Манипулятор представляет себя жертвой обстоятельств, вызывая сочувствие.</p>
+                            <p><em>Пример:</em> "У меня такие проблемы, если ты мне не поможешь..."</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>🔥 "Создание срочности"</h3>
+                            <p><strong>Суть:</strong> Искусственное ограничение времени для принятия решения.</p>
+                            <p><em>Пример:</em> "Это предложение действует только до завтра!"</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>🎭 "Эмоциональные качели"</h3>
+                            <p><strong>Суть:</strong> Чередование критики и похвалы для создания эмоциональной зависимости.</p>
+                            <p><em>Пример:</em> То холодность и игнор, то бурные проявления любви.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>👥 "Ложный консенсус"</h3>
+                            <p><strong>Суть:</strong> "Все так делают", создание ощущения, что определенное поведение является нормой.</p>
+                            <p><em>Пример:</em> "Все наши клиенты выбирают именно этот тариф..."</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="recognition">
+        <div class="container">
+            <h2 class="section-title">Как распознать манипуляцию?</h2>
+            <div class="section-content">
+                <div style="text-align: center; margin: 3rem 0;">
+                    <h3 style="color: #090909; margin-bottom: 2rem; font-size: 1.8rem;">🚩 Тревожные сигналы</h3>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card" style="border-left: 5px solid #ef4444;">
+                        <h3>⏰ Давление времени</h3>
+                        <p>Требование немедленного решения, отказ дать время на обдумывание: "Решай сейчас или упустишь шанс!"</p>
+                    </div>
+                    <div class="card" style="border-left: 5px solid #f59e0b;">
+                        <h3>😢 Эмоциональное принуждение</h3>
+                        <p>Попытки вызвать чувство вины, стыда или страха: "Если ты меня любишь, то сделаешь это"</p>
+                    </div>
+                    <div class="card" style="border-left: 5px solid #8b5cf6;">
+                        <h3>🎁 Неожиданная щедрость</h3>
+                        <p>Внезапные подарки или услуги без видимой причины, после которых следуют просьбы</p>
+                    </div>
+                    <div class="card" style="border-left: 5px solid #06b6d4;">
+                        <h3>📊 Селективная информация</h3>
+                        <p>Предоставление только части фактов, сокрытие важных деталей или искажение данных</p>
+                    </div>
+                    <div class="card" style="border-left: 5px solid #10b981;">
+                        <h3>🎯 Льстивые комплименты</h3>
+                        <p>Чрезмерные похвалы, особенно касающиеся ваших способностей помочь манипулятору</p>
+                    </div>
+                    <div class="card" style="border-left: 5px solid #ec4899;">
+                        <h3>🔄 Противоречивые сигналы</h3>
+                        <p>Слова не совпадают с действиями, постоянная смена настроения и требований</p>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <h4>Доверьтесь своим ощущениям!</h4>
+                    <p>Если после общения вы чувствуете дискомфорт, растерянность или принуждение — это может быть признаком манипуляции. Ваша интуиция часто срабатывает раньше логики.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="defense">
+        <div class="container">
+            <h2 class="section-title">Защита от манипуляций</h2>
+            <div class="section-content">
+                <div style="text-align: center; margin: 3rem 0;">
+                    <div class="cards-grid" style="max-width: 800px; margin: 0 auto;">
+                        <div style="text-align: center; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5rem; max-width: 1000px; margin: 0 auto;">
+                            <div>
+                                <span class="stat-counter" id="counter1">85</span>
+                                <p>людей поддаются манипуляциям</p>
+                            </div>
+                            <div>
+                                <span class="stat-counter" id="counter2">73</span>
+                                <p>людей не осознают воздействие</p>
+                            </div>
+                            <div>
+                                <span class="stat-counter" id="counter3">92</span>
+                                <p>людей можно научить защищаться</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; margin: 3rem 0; font-size: 1.8rem; color: #10b981;">🛡️ Стратегии защиты</h3>
+
+                <div class="defense-grid">
+                    <div class="defense-item">
+                        <h4>⏸️ Пауза перед решением</h4>
+                        <p>Всегда просите время на обдумывание. Говорите: "Я подумаю и отвечу завтра". Истинные предложения не исчезают за ночь.</p>
+                    </div>
+                    <div class="defense-item">
+                        <h4>❓ Задавайте вопросы</h4>
+                        <p>Уточняйте детали, просите конкретику. Манипуляторы избегают прямых ответов и стараются увести разговор в сторону.</p>
+                    </div>
+                    <div class="defense-item">
+                        <h4>🔍 Проверяйте факты</h4>
+                        <p>Не принимайте информацию на веру. Ищите независимые источники, сравнивайте данные из разных источников.</p>
+                    </div>
+                    <div class="defense-item">
+                        <h4>💪 Укрепляйте границы</h4>
+                        <p>Четко определите свои принципы и не отступайте от них. Учитесь говорить "нет" без объяснения причин.</p>
+                    </div>
+                    <div class="defense-item">
+                        <h4>👥 Советуйтесь с друзьями</h4>
+                        <p>Обсуждайте важные решения с теми, кому доверяете. Взгляд со стороны поможет увидеть скрытые мотивы.</p>
+                    </div>
+                    <div class="defense-item">
+                        <h4>🧠 Развивайте критическое мышление</h4>
+                        <p>Изучайте логические ошибки, учитесь анализировать информацию, развивайте эмоциональный интеллект.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: linear-gradient(135deg, #1f2937, #374151); color: white; text-align: center; padding: 4rem 0;">
+        <div class="container">
+            <h3 style="margin-bottom: 2rem; font-size: 2rem;">🎯 Ключевые выводы</h3>
+            <div class="cards-grid" style="margin-bottom: 3rem;">
+                <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px;">
+                    <h4 style="color: #fbbf24; margin-bottom: 1rem;">🧠 Знание — сила</h4>
+                    <p>Понимание механизмов манипуляций — первый шаг к защите от них</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px;">
+                    <h4 style="color: #34d399; margin-bottom: 1rem;">🛡️ Границы важны</h4>
+                    <p>Четкие личные границы — лучшая защита от нежелательного влияния</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px;">
+                    <h4 style="color: #a78bfa; margin-bottom: 1rem;">⚖️ Этика общения</h4>
+                    <p>Здоровые отношения строятся на взаимном уважении, а не на принуждении</p>
+                </div>
+            </div>
+            
+            <div class="image-placeholder" style="margin: 2rem auto; max-width: 500px; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3);">
+                <img src="./images/svoboda_vibora.png" alt="😒 Кажется, изображение не загрузилось">
+            </div>
+
+            <p style="max-width: 700px; margin: 2rem auto; line-height: 1.6; opacity: 0.9;">
+                Помните: каждый имеет право на собственное мнение и выбор. 
+                Никто не должен принуждать вас к действиям против вашей воли. 
+                Будьте бдительны, но не параноидальны — большинство людей общается честно.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        console.log('Разработано Георгием Солдатовым из 5СА!')
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (scrolled / maxHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        });
+
+        // Animated counters
+        function animateCounter(elementId, finalValue) {
+            const element = document.getElementById(elementId);
+            let currentValue = 0;
+            const increment = finalValue / 100;
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= finalValue) {
+                    currentValue = finalValue;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(currentValue) + '%';
+            }, 20);
+        }
+
+        // Intersection Observer for counters
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter('counter1', 85);
+                    animateCounter('counter2', 73);
+                    animateCounter('counter3', 92);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        // Quiz functionality
+        let currentQuestion = 0;
+        const questions = [
+            {
+                question: "Коллега просит вас остаться после работы и помочь с его проектом, говоря: 'Ты же понимаешь, как это важно для всей команды'. Ваша реакция?",
+                answers: [
+                    "Соглашусь, не хочу подводить команду",
+                    "Спрошу подробности и подумаю", 
+                    "Откажусь, у меня свои планы",
+                    "Предложу помочь в другое время"
+                ]
+            },
+            {
+                question: "Продавец говорит: 'Это последний товар по такой цене, другие покупатели уже интересовались'. Что вы сделаете?",
+                answers: [
+                    "Куплю немедленно, чтобы не упустить",
+                    "Попрошу время подумать",
+                    "Проверю цены в других местах",
+                    "Уйду, это явное давление"
+                ]
+            },
+            {
+                question: "Друг постоянно жалуется на жизнь и просит денег взаймы, говоря: 'Ты же мой единственный друг'. Как поступите?",
+                answers: [
+                    "Дам денег, жалко друга",
+                    "Предложу другую помощь",
+                    "Откажу и объясню почему",
+                    "Посоветую обратиться к специалисту"
+                ]
+            }
+        ];
+
+        function selectAnswer(letter) {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                updateQuiz();
+            } else {
+                showResult(letter);
+            }
+        }
+
+        function updateQuiz() {
+            const question = questions[currentQuestion];
+            document.getElementById('quizQuestion').textContent = question.question;
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((option, index) => {
+                option.textContent = question.answers[index];
+            });
+        }
+
+        function showResult(lastAnswer) {
+            const results = {
+                'a': {
+                    title: '⚠️ Высокий риск манипуляций',
+                    description: 'Вы легко поддаетесь эмоциональному давлению. Изучите техники защиты!'
+                },
+                'b': {
+                    title: '🤔 Осторожный подход',
+                    description: 'Вы умеете анализировать, но иногда можете поддаваться давлению.'
+                },
+                'c': {
+                    title: '🛡️ Хорошая защита',
+                    description: 'У вас крепкие границы, но будьте внимательны к скрытым техникам.'
+                },
+                'd': {
+                    title: '🎯 Отличная устойчивость',
+                    description: 'Вы умеете находить компромиссы, сохраняя свои интересы!'
+                }
+            };
+            
+            const result = results[lastAnswer];
+            document.getElementById('quizResult').innerHTML = `
+                <div style="margin-top: 2rem; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                    <h4 style="font-size: 1.4rem; margin-bottom: 1rem;">${result.title}</h4>
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">${result.description}</p>
+                    <button onclick="resetQuiz()" class="cta-button" style="background: rgba(255,255,255,0.2);">Пройти еще раз</button>
+                </div>
+            `;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            document.getElementById('quizResult').innerHTML = '';
+            const question = questions[0];
+            document.getElementById('quizQuestion').textContent = question.question;
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((option, index) => {
+                option.textContent = question.answers[index];
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Initialize observers when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.section-title, .section-content, .timeline-item');
+            animatedElements.forEach(el => observer.observe(el));
+            
+            // Observe counter section
+            const counterSection = document.querySelector('#defense .cards-grid');
+            if (counterSection) {
+                counterObserver.observe(counterSection);
+            }
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
