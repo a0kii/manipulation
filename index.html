@@ -29,7 +29,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: #1f1f1f;
             backdrop-filter: blur(10px);
             z-index: 1000;
             transition: all 0.3s ease;
@@ -43,10 +43,26 @@
             padding: 1rem 2rem;
         }
 
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-image {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #667eea;
+            color: #fff;
         }
 
         .nav-links {
@@ -57,25 +73,13 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: #fff;
             font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
+            transition: color 0.3s ease;
         }
 
         .nav-links a:hover {
             color: #667eea;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(45deg, #ee7752, #e73c7e);
-            transition: width 0.3s ease;
         }
 
         .nav-links a:hover::after {
@@ -506,6 +510,37 @@
             display: block;
             margin-bottom: 0.5rem;
         }
+
+        .stats-grid {
+            text-align: center;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stats-grid > div:last-child {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 767px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                justify-content: center;
+            }
+            .stats-grid > div:last-child {
+                grid-column: 1 / -1;
+                max-width: 50%;
+                margin: 0 auto;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid > div:last-child {
+                grid-column: auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -513,14 +548,16 @@
 
     <header>
         <nav>
-            <div class="logo">Манипуляции</div>
+            <div class="logo-container">
+                <img src="./images/logo.jpg" alt="😒 Кажется, логотип не загрузился..." class="logo-image">
+                <div class="logo">Манипуляции</div>
+            </div>
             <ul class="nav-links">
                 <li><a href="#definition">Определение</a></li>
                 <li><a href="#types">Виды</a></li>
                 <li><a href="#techniques">Техники</a></li>
                 <li><a href="#recognition">Распознавание</a></li>
                 <li><a href="#defense">Защита</a></li>
-                <li><a href="#quiz">Тест</a></li>
             </ul>
         </nav>
     </header>
@@ -530,7 +567,7 @@
             <h1 class="floating">МАНИПУЛЯЦИИ</h1>
             <h2 style="font-size: 1.8rem; margin-bottom: 1rem; font-weight: 300;">в современном обществе</h2>
             <p>Изучение психологических механизмов влияния и способов защиты от них</p>
-            <a href="#definition" class="cta-button">Изучить механизмы</a>
+            <a href="#definition" class="cta-button">Начать изучение</a>
         </div>
     </section>
 
@@ -539,7 +576,7 @@
             <h2 class="section-title">Что такое манипуляция?</h2>
             <div class="section-content">
                 <div class="image-placeholder">
-                    <img src="./images/kuklovod (1).jpg" alt="😒 Кажется, изображение не загрузилось">
+                    <img src="./images/kuklovod.jpg" alt="😒 Кажется, изображение не загрузилось">
                 </div>
                 
                 <div style="max-width: 900px; margin: 3rem auto; text-align: center;">
@@ -719,7 +756,7 @@
             <div class="section-content">
                 <div style="text-align: center; margin: 3rem 0;">
                     <div class="cards-grid" style="max-width: 800px; margin: 0 auto;">
-                        <div style="text-align: center; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5rem; max-width: 1000px; margin: 0 auto;">
+                        <div class="stats-grid">
                             <div>
                                 <span class="stat-counter" id="counter1">85</span>
                                 <p>людей поддаются манипуляциям</p>
